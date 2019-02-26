@@ -25,7 +25,6 @@ class SearchViewController: UIViewController {
         
         activityIndicator.isHidden = true
         searchTextField.delegate = self
-        LocationService.shared.startUpdatingLocation()
     }
     
     func showActivityIndicator() {

@@ -16,8 +16,7 @@ class DetailsViewController: UIViewController {
     
     
     var places: PlaceDetails!
-    var indexNo: Int?
-    
+    var indexNo: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,15 +43,14 @@ class DetailsViewController: UIViewController {
             else {
                 DispatchQueue.main.async {
                     self.hideActivityIndicator()
-                    self.phoneLabel.text = results.formatted_phone_number!
-                    self.websiteLabel.text = results.website!
+                    
+                    self.phoneLabel.text = results.formatted_phone_number ?? ""
+                    self.websiteLabel.text = results.website ?? ""
                     self.phoneLabel.isHidden = false
                     self.websiteLabel.isHidden = false
                 }
-                
             }
         }
-
     }
     
     func showActivityIndicator() {
@@ -65,7 +63,5 @@ class DetailsViewController: UIViewController {
         activityIndicator.isHidden = true
     }
     
-    
-
 }
 
