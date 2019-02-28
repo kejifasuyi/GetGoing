@@ -27,7 +27,11 @@
                                                 <action selector="closeButtonAction:" destination="vgC-vo-ix3" id="VjX-pH-O8F"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Item" id="q0x-53-J6z"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="q0x-53-J6z">
+                                            <connections>
+                                                <action selector="saveButtonAction:" destination="vgC-vo-ix3" id="V8J-E4-Hnb"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

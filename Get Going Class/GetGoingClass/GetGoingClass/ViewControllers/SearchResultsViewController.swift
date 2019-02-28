@@ -101,21 +101,5 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
         let place = places[indexPath.row]
         print("Indexpathrowno: \(indexPath.row)")
        self.presentDetails(place, indexPath.row)
-//        GooglePlacesAPI.requestDetails(place.place_id ?? "") { (status, json) in
-//            print(json ?? "")
-//
-//            guard let jsonObj = json else { return }
-//            let results = APIParser.parseNewDetails(jsonObj: jsonObj)
-//
-//            if results.isEmpty {
-//                //TODO: Present an alert
-//                DispatchQueue.main.async {
-//                    print("No results")
-//                }
-//            }
-//            else {
-//                self.presentDetails(results, indexPath.row)
-//            }
-//        }
     }
 }

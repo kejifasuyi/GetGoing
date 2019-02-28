@@ -44,9 +44,9 @@ class SearchViewController: UIViewController {
     }
     
     @IBAction func presentFilter(_ sender: UIButton) {
-//        performSegue(withIdentifier: "FiltersSegue", sender: self)
-        guard let filtersViewController = UIStoryboard(name: "Filters", bundle: nil).instantiateViewController(withIdentifier: "FiltersViewController") as? FiltersViewController else {return}
-        present(filtersViewController, animated: true, completion: nil)
+        performSegue(withIdentifier: "FiltersSegue", sender: self)
+//        guard let filtersViewController = UIStoryboard(name: "Filters", bundle: nil).instantiateViewController(withIdentifier: "FiltersViewController") as? FiltersViewController else {return}
+//        present(filtersViewController, animated: true, completion: nil)
     }
     
     @IBAction func segmentedObserver(_ sender: UISegmentedControl) {
@@ -137,6 +137,14 @@ class SearchViewController: UIViewController {
         alert.addAction(okButtonAction)
         present(alert, animated: true)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! FiltersViewController
+        
+        destinationVC.filterDelegate = self
+       // print("Did this segue happen?")
+    }
+    
 }
 
 extension SearchViewController: UITextFieldDelegate {
@@ -156,6 +164,8 @@ extension SearchViewController: UITextFieldDelegate {
             print(textField.text ?? "")
         }
     }
+    
+    
 }
 
 extension SearchViewController: LocationServiceDelegate {
@@ -164,4 +174,10 @@ extension SearchViewController: LocationServiceDelegate {
         print("latitude \(location.coordinate.latitude) longitude \(location.coordinate.longitude)")
         currentLocation = location.coordinate
         }
+}
+
+extension SearchViewController: filterViewDelegate {
+    func updateFilterSettings(radius: Double, rankBy: String, openNow: Bool) {
+        print("Protocol works \(radius) bla \(rankBy) \(openNow)")
+    }
 }

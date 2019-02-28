@@ -21,4 +21,9 @@ class Constants {
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("PlaceDetails")
+    
+    //Declare Constant Default Values
+    static let defaultRadius:Float = 0.0
+    static let defaultRankBy = "prominence"
+    static let defaultOpenNow = false
 }

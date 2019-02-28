@@ -31,6 +31,8 @@ class FiltersViewController: UIViewController {
     
     var rankByDictionary: [RankBy] = [.prominence, .distance]
     
+    //Declaring the Delegate Variable
+    var filterDelegate: filterViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +73,24 @@ class FiltersViewController: UIViewController {
     @IBAction func radiusSliderChangedValue(_ sender: UISlider) {
         print("slider value changed to \(sender.value) \(Int(sender.value))")
     }
+    
+    @IBAction func saveButtonAction(_ sender: UIBarButtonItem) {
+        //Get Radius Value
+        let radiusValue: Double = Double(radiusSlider?.value ?? Constants.defaultRadius)
+        let rankByValue = rankBySelectedLabel.text ?? Constants.defaultRankBy
+        let openNowValue = isOpenNow.isOn
+        
+        print(radiusValue)
+        print(rankByValue)
+        print(openNowValue)
+        
+        filterDelegate?.updateFilterSettings(radius: radiusValue, rankBy: rankByValue, openNow: openNowValue)
+        
+        self.dismiss(animated: true, completion: nil)
+        
+    }
+    
+    
     /*
     // MARK: - Navigation
 
@@ -99,4 +119,9 @@ extension FiltersViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         rankBySelectedLabel.text = rankByDictionary[row].description()
     }
+}
+
+//Step 1
+protocol filterViewDelegate {
+    func updateFilterSettings(radius: Double, rankBy: String, openNow: Bool)
 }
