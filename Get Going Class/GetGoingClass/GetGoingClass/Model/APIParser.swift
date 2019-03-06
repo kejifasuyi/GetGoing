@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class APIParser {
     
@@ -27,7 +28,7 @@ class APIParser {
     
     
     class func parseNewDetails(jsonObj: [String: Any]) -> PlaceDetails {
-        var places: PlaceDetails = PlaceDetails(id: "", name: "", vicinity: "", formattedAddress: "", rating: 0.0, icon: "", place_id: "", website: "", formatted_phone_number: "")
+        var places: PlaceDetails = PlaceDetails(id: "", name: "", vicinity: "", formattedAddress: "", rating: 0.0, icon: "", place_id: "", coordinate: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), website: "", formatted_phone_number: "")
 
         //Parsing general root object
         if let results = jsonObj["result"] as? [String: Any]{

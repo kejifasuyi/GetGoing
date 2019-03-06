@@ -11,6 +11,7 @@ import CoreLocation
 
 class SearchViewController: UIViewController {
     
+    @IBOutlet weak var presentFilterButton: UIButton!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -19,6 +20,12 @@ class SearchViewController: UIViewController {
     // MARK: - Outlets
     var searchParameter: String?
     var currentLocation: CLLocationCoordinate2D?
+    
+    //Newly Added
+    var radiusVal = Double(Constants.defaultRadius)
+    var rankByVal = Constants.defaultRankBy
+    var openNowVal = Constants.defaultOpenNow
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +45,14 @@ class SearchViewController: UIViewController {
         activityIndicator.isHidden = true
         searchButton.isEnabled = true
     }
+    
    
     @IBAction func loadLastSavedResults(_ sender: UIButton) {
-        
+        guard let places = loadPlacesFromLocalStorage() else {
+            presentErrorAlert(message: "No results were previously stored")
+            return
+        }
+        presentSearchResults(places)
     }
     
     @IBAction func presentFilter(_ sender: UIButton) {
@@ -69,9 +81,11 @@ class SearchViewController: UIViewController {
         searchTextField.resignFirstResponder()
         showActivityIndicator()
         
+        print("After changing the settings: \(radiusVal) \(rankByVal)")
+        
         switch segmentControl.selectedSegmentIndex {
         case 0:
-        GooglePlacesAPI.requestPlaces(query) { (status, json) in
+            GooglePlacesAPI.requestPlaces(query, opennow: openNowVal) { (status, json) in
             print(json ?? "")
             DispatchQueue.main.async {
                 self.hideActivityIndicator()
@@ -80,6 +94,8 @@ class SearchViewController: UIViewController {
             guard let jsonObj = json else { return }
             let results = APIParser.parseNearbySearchResults(jsonObj: jsonObj)
             
+            self.savePlacesToLocalStorage(places: results)
+                
             if results.isEmpty {
                 //TODO: Present an alert
                 DispatchQueue.main.async {
@@ -93,7 +109,7 @@ class SearchViewController: UIViewController {
         case 1:
             guard let location = currentLocation else { return }
             
-            GooglePlacesAPI.requestPlacesNearby(for: location, radius: 10000.0, query) { (status, json) in
+            GooglePlacesAPI.requestPlacesNearby(for: location, radius: Double(radiusVal), query, opennow: openNowVal, rankby: rankByVal) { (status, json) in
                 print(json ?? "")
                 
                 DispatchQueue.main.async {
@@ -102,6 +118,8 @@ class SearchViewController: UIViewController {
                 
                 guard let jsonObj = json else { return }
                 let results = APIParser.parseNearbySearchResults(jsonObj: jsonObj)
+                
+                self.savePlacesToLocalStorage(places: results)
                 
                 if results.isEmpty {
                     //TODO: Present an alert
@@ -138,9 +156,18 @@ class SearchViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    func savePlacesToLocalStorage(places: [PlaceDetails]) {
+        // save data to the local storage
+        NSKeyedArchiver.archiveRootObject(places, toFile: Constants.ArchiveURL.path)
+    }
+    
+    func loadPlacesFromLocalStorage() -> [PlaceDetails]? {
+        // pull data from the local storage
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Constants.ArchiveURL.path) as? [PlaceDetails]
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! FiltersViewController
-        
         destinationVC.filterDelegate = self
        // print("Did this segue happen?")
     }
@@ -179,5 +206,16 @@ extension SearchViewController: LocationServiceDelegate {
 extension SearchViewController: filterViewDelegate {
     func updateFilterSettings(radius: Double, rankBy: String, openNow: Bool) {
         print("Protocol works \(radius) bla \(rankBy) \(openNow)")
+        radiusVal = radius
+        rankByVal = rankBy
+        openNowVal = openNow
+        
+        if radiusVal != Double(Constants.defaultRadius)  || rankByVal != Constants.defaultRankBy || openNowVal != Constants.defaultOpenNow {
+            
+            presentFilterButton.setImage(UIImage(named: "filters"), for: .normal)
+        }
+        else{
+            presentFilterButton.setImage(UIImage(named: "filtersDefault"), for: .normal)
+        }
     }
 }

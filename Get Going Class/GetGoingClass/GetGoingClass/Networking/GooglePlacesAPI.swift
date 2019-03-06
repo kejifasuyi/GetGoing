@@ -11,7 +11,7 @@ import CoreLocation
 
 class GooglePlacesAPI {
     
-    class func requestPlaces(_ query: String, completion:
+    class func requestPlaces(_ query: String, opennow: Bool?, completion:
         @escaping(_ status: Int, _ json: [String: Any]?) -> Void) {
         
         var urlComponents = URLComponents()
@@ -24,6 +24,9 @@ class GooglePlacesAPI {
             URLQueryItem(name: "key", value: Constants.apiKey)
         ]
         
+        if opennow == true {
+            urlComponents.queryItems?.append(URLQueryItem(name: "opennow", value: opennow?.description))
+        }
         if let url = urlComponents.url {
             NetworkingLayer.getRequest(with: url, timeoutInterval: 500) { (status, data) in
                 
@@ -42,6 +45,8 @@ class GooglePlacesAPI {
     class func requestPlacesNearby(for coordinate: CLLocationCoordinate2D,
                                    radius: Double,
                                    _ query: String?,
+                                   opennow: Bool?,
+                                   rankby: String?,
                                    completion: @escaping(_ status: Int, _ json: [String: Any]?) -> Void) {
         
         var urlComponents = URLComponents()
@@ -51,7 +56,7 @@ class GooglePlacesAPI {
         
         urlComponents.queryItems = [
             URLQueryItem(name: "location", value: "\(coordinate.latitude),\(coordinate.longitude)"),
-            URLQueryItem(name: "radius", value: "\(Int(radius))"),
+            URLQueryItem(name: "rankby", value: rankby),
             URLQueryItem(name: "key", value: Constants.apiKey)
         ]
         
@@ -59,7 +64,16 @@ class GooglePlacesAPI {
             urlComponents.queryItems?.append(URLQueryItem(name: "keyword", value: keyword))
         }
         
+        if opennow == true {
+            urlComponents.queryItems?.append(URLQueryItem(name: "opennow", value: opennow?.description))
+        }
+        
+        if  rankby == "prominence" {
+            urlComponents.queryItems?.append(URLQueryItem(name: "radius", value: "\(Int(radius))"))
+        }
+        
         if let url = urlComponents.url {
+            print(url)
             NetworkingLayer.getRequest(with: url, timeoutInterval: 500) { (status, data) in
                 
                 if let responseData = data, let

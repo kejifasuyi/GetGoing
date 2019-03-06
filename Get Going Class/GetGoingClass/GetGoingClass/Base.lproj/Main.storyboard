@@ -93,6 +93,7 @@
                     <navigationItem key="navigationItem" id="TDb-P3-anj"/>
                     <connections>
                         <outlet property="activityIndicator" destination="VGt-Jr-fDb" id="MnD-bs-aRy"/>
+                        <outlet property="presentFilterButton" destination="wJu-zU-ZFX" id="Vvr-Ei-Mtr"/>
                         <outlet property="searchButton" destination="SRV-Jm-C6y" id="wH9-xN-R3Q"/>
                         <outlet property="searchTextField" destination="AaI-gb-tRv" id="S64-vR-LTf"/>
                         <outlet property="segmentControl" destination="EhD-aL-dUR" id="q7V-4Y-wfK"/>
@@ -122,8 +123,20 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Acf-0m-kHq">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hoL-5q-QFk">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <items>
+                                            <navigationItem title="Results" id="7Ck-7A-6eI">
+                                                <barButtonItem key="rightBarButtonItem" title="Mapview" id="rmf-gE-nPV">
+                                                    <connections>
+                                                        <action selector="mapviewButtonAction:" destination="Wg8-Mu-beM" id="Skw-Sh-fTH"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="brP-pZ-a3d">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
+                                        <rect key="frame" x="0.0" y="46" width="375" height="29"/>
                                         <segments>
                                             <segment title="A - Z"/>
                                             <segment title="Rating"/>
@@ -133,7 +146,7 @@
                                         </connections>
                                     </segmentedControl>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xkh-bC-4hS">
-                                        <rect key="frame" x="0.0" y="33" width="375" height="614"/>
+                                        <rect key="frame" x="0.0" y="76" width="375" height="571"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
@@ -151,6 +164,7 @@
                     <connections>
                         <outlet property="segmentedOrder" destination="brP-pZ-a3d" id="bAp-Ng-LvE"/>
                         <outlet property="tableView" destination="xkh-bC-4hS" id="VNW-gc-5rX"/>
+                        <segue destination="pMp-pu-QEb" kind="presentation" identifier="MapviewSegue" id="Z0i-yG-wdx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="559-G2-Dk4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -210,6 +224,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPW-AI-s8B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2566" y="9"/>
+        </scene>
+        <!--Map Preview View Controller-->
+        <scene sceneID="hSw-n0-Alr">
+            <objects>
+                <viewController storyboardIdentifier="MapPreviewViewController" id="pMp-pu-QEb" customClass="MapPreviewViewController" customModule="GetGoingClass" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Y7i-2T-l4w">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5CF-3B-vbA">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="rPi-cI-psi">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="XTV-Hu-lpz">
+                                            <connections>
+                                                <action selector="closeButtonAction:" destination="pMp-pu-QEb" id="o0s-j8-2wc"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="c7x-wT-Enk">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5CF-3B-vbA" firstAttribute="top" secondItem="PBz-P4-0el" secondAttribute="top" id="7cy-za-RUM"/>
+                            <constraint firstItem="c7x-wT-Enk" firstAttribute="top" secondItem="5CF-3B-vbA" secondAttribute="bottom" id="CPP-0F-HqJ"/>
+                            <constraint firstItem="5CF-3B-vbA" firstAttribute="leading" secondItem="PBz-P4-0el" secondAttribute="leading" id="NaU-wG-y7O"/>
+                            <constraint firstItem="5CF-3B-vbA" firstAttribute="trailing" secondItem="PBz-P4-0el" secondAttribute="trailing" id="Pus-Gw-fr0"/>
+                            <constraint firstItem="PBz-P4-0el" firstAttribute="trailing" secondItem="c7x-wT-Enk" secondAttribute="trailing" id="VDD-ha-Xmr"/>
+                            <constraint firstItem="PBz-P4-0el" firstAttribute="bottom" secondItem="c7x-wT-Enk" secondAttribute="bottom" id="nUb-J7-7d9"/>
+                            <constraint firstItem="c7x-wT-Enk" firstAttribute="leading" secondItem="PBz-P4-0el" secondAttribute="leading" id="ze0-3F-v8Y"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="PBz-P4-0el"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="c7x-wT-Enk" id="gID-hc-HQt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vmh-me-cUy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3307" y="17"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="19w-x7-eZ5">

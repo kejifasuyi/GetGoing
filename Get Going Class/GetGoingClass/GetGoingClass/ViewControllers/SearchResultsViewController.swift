@@ -30,9 +30,6 @@ class SearchResultsViewController: UIViewController {
     }
     
     
-    
-    
-    //Newly Added
     @IBAction func segementedRanker(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 1 {
             sortListByRating()
@@ -40,6 +37,16 @@ class SearchResultsViewController: UIViewController {
         if sender.selectedSegmentIndex == 0 {
             sortList()
         }
+    }
+    
+    
+    @IBAction func mapviewButtonAction(_ sender: UIBarButtonItem) {
+        guard let mapPreviewViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MapPreviewViewController") as? MapPreviewViewController
+            else { return }
+        
+        mapPreviewViewController.place = places
+        
+        present(mapPreviewViewController, animated: true, completion: nil)
     }
     
     func sortList() {

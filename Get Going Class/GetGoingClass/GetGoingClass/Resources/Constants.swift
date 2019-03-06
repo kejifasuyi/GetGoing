@@ -23,7 +23,7 @@ class Constants {
     static let ArchiveURL = DocumentsDirectory.appendingPathComponent("PlaceDetails")
     
     //Declare Constant Default Values
-    static let defaultRadius:Float = 0.0
+    static let defaultRadius:Float = 1000.0
     static let defaultRankBy = "prominence"
     static let defaultOpenNow = false
 }

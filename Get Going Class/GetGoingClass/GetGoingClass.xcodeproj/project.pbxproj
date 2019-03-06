@@ -25,6 +25,7 @@
 		84A1973421F937D400ACCDF7 /* SearchResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A1973221F937D400ACCDF7 /* SearchResultTableViewCell.xib */; };
 		84A1973821FFBECE00ACCDF7 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A1973721FFBECE00ACCDF7 /* RatingControl.swift */; };
 		84A1973B2202607100ACCDF7 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A1973A2202607100ACCDF7 /* LocationService.swift */; };
+		84B262532229F5DF00CB4B14 /* MapPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B262522229F5DF00CB4B14 /* MapPreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		84A1973221F937D400ACCDF7 /* SearchResultTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultTableViewCell.xib; sourceTree = "<group>"; };
 		84A1973721FFBECE00ACCDF7 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		84A1973A2202607100ACCDF7 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		84B262522229F5DF00CB4B14 /* MapPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				84A1972E21F9354C00ACCDF7 /* SearchResultsViewController.swift */,
 				846583E32208E9FC00B46D79 /* FiltersViewController.swift */,
 				8480A6B7220A87AD00F5D927 /* DetailsViewController.swift */,
+				84B262522229F5DF00CB4B14 /* MapPreviewViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 			files = (
 				84A1972D21F921D200ACCDF7 /* APIParser.swift in Sources */,
 				84A1972F21F9354C00ACCDF7 /* SearchResultsViewController.swift in Sources */,
+				84B262532229F5DF00CB4B14 /* MapPreviewViewController.swift in Sources */,
 				84A1972B21F91C8500ACCDF7 /* PlaceDetails.swift in Sources */,
 				84A1971E21EFFE3000ACCDF7 /* SearchViewController.swift in Sources */,
 				84A1972621F6891700ACCDF7 /* NetworkingLayer.swift in Sources */,
